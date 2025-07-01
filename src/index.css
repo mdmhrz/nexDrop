@@ -3,6 +3,13 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+/* @plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: '#CAEB66';
+  --color-secondary: teal;
+} */
+
 
 body {
   font-family: "Urbanist", sans-serif;

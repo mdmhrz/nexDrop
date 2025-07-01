@@ -2,11 +2,13 @@
 
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { BiSolidQuoteSingleLeft } from 'react-icons/bi';
+import topIcons from '../../../assets/customer-top.png'
 
 const testimonials = [
     {
@@ -49,9 +51,9 @@ const testimonials = [
 
 const TestimonialSlider = () => {
     return (
-        <section className="py-16 bg-gray-50">
+        <section className="py-16">
             <div className="max-w-4xl mx-auto px-4 text-center">
-                <img src="/box-illustration.svg" alt="Boxes" className="mx-auto mb-6 h-16" />
+                <img src={topIcons} alt="Boxes" className="mx-auto mb-6 h-16" />
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
                     What our customers are saying
                 </h2>
@@ -62,13 +64,17 @@ const TestimonialSlider = () => {
 
             <div className="relative max-w-6xl mx-auto px-4">
                 <Swiper
-                    modules={[Navigation, Pagination]}
+                    modules={[Navigation, Pagination, Autoplay]}
                     slidesPerView={3}
                     centeredSlides={true}
                     loop={true}
                     navigation={{
                         nextEl: '.next-btn',
                         prevEl: '.prev-btn',
+                    }}
+                    autoplay={{
+                        delay: 3000,
+                        disableOnInteraction: false,
                     }}
                     pagination={{ clickable: true }}
                     className="pb-12"
@@ -85,7 +91,8 @@ const TestimonialSlider = () => {
                                         ? 'bg-white scale-100 opacity-100'
                                         : 'bg-gray-100 scale-90 opacity-50'
                                         }`}
-                                >
+                                >   <BiSolidQuoteSingleLeft className='text-5xl text-primary' />
+
                                     <p className="text-gray-600 text-sm md:text-base mb-6">
                                         “{item.message}”
                                     </p>

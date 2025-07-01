@@ -10,12 +10,13 @@ import TestimonialSlider from '../TestimonialSlider/TestimonialSlider';
 
 const Home = () => {
     return (
-        <div>
+        <div className=''>
             <Banner></Banner>
             <HowItWorks></HowItWorks>
             <OurServices></OurServices>
             <ClientLogos></ClientLogos>
             <Features></Features>
+            <div className='border border-b border-dashed border-gray-400 mb-20'></div>
             <BecomeAMarchent></BecomeAMarchent>
             <TestimonialSlider></TestimonialSlider>
             <FaqSection></FaqSection>

@@ -26,7 +26,7 @@ const features = [
 
 const Features = () => {
     return (
-        <section className="py-16 w-full mx-auto px-4">
+        <div className="py-16 w-full mx-auto">
             {/* Section Title & Subtitle */}
             <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold text-neutral">Why Choose NexDrop?</h2>
@@ -39,7 +39,7 @@ const Features = () => {
             {features.map((feature, index) => (
                 <div
                     key={index}
-                    className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-12 mb-12 bg-base-100 p-6 rounded-xl shadow"
+                    className="flex flex-col md:flex-row items-center gap-6 md:gap-12 mb-12 bg-base-100 p-6 rounded-xl shadow"
                 >
                     {/* Left Image (fixed width) */}
                     <div className="w-full md:w-auto md:flex-shrink-0 flex justify-center">
@@ -73,7 +73,7 @@ const Features = () => {
                 </div>
 
             ))}
-        </section>
+        </div>
     );
 };
 
