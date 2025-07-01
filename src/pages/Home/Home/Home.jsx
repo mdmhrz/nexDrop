@@ -5,6 +5,7 @@ import ClientLogos from '../ClientLogos/ClientLogos';
 import Features from '../Features/Features';
 import HowItWorks from '../HowItWorks/HowItWorks';
 import BecomeAMarchent from '../BecomeAMarchent/BecomeAMarchent';
+import FaqSection from '../FaqSection/FaqSection';
 
 const Home = () => {
     return (
@@ -15,6 +16,7 @@ const Home = () => {
             <ClientLogos></ClientLogos>
             <Features></Features>
             <BecomeAMarchent></BecomeAMarchent>
+            <FaqSection></FaqSection>
         </div>
     );
 };
