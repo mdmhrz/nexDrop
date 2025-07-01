@@ -6,6 +6,7 @@ import Features from '../Features/Features';
 import HowItWorks from '../HowItWorks/HowItWorks';
 import BecomeAMarchent from '../BecomeAMarchent/BecomeAMarchent';
 import FaqSection from '../FaqSection/FaqSection';
+import TestimonialSlider from '../TestimonialSlider/TestimonialSlider';
 
 const Home = () => {
     return (
@@ -16,6 +17,7 @@ const Home = () => {
             <ClientLogos></ClientLogos>
             <Features></Features>
             <BecomeAMarchent></BecomeAMarchent>
+            <TestimonialSlider></TestimonialSlider>
             <FaqSection></FaqSection>
         </div>
     );
