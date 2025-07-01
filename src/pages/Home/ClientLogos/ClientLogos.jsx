@@ -16,7 +16,7 @@ const logos = [
 
 const ClientLogos = () => {
     return (
-        <section className="py-26 bg-primary/5 mb-16 rounded-xl">
+        <section className="py-16 rounded-xl">
             <div className="text-center mb-8">
                 <h2 className="text-3xl lg:text-4xl font-bold text-neutral">Trusted By</h2>
                 <p className="mt-2 text-gray-500">Leading businesses and partners</p>

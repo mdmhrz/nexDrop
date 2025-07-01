@@ -9,6 +9,8 @@ Aos.init()
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <div className='bg-base-300'>
+      <RouterProvider router={router}></RouterProvider>
+    </div>
   </StrictMode>,
 )

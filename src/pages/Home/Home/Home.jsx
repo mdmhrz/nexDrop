@@ -4,6 +4,7 @@ import OurServices from '../OurSevices/OurServices';
 import ClientLogos from '../ClientLogos/ClientLogos';
 import Features from '../Features/Features';
 import HowItWorks from '../HowItWorks/HowItWorks';
+import BecomeAMarchent from '../BecomeAMarchent/BecomeAMarchent';
 
 const Home = () => {
     return (
@@ -13,6 +14,7 @@ const Home = () => {
             <OurServices></OurServices>
             <ClientLogos></ClientLogos>
             <Features></Features>
+            <BecomeAMarchent></BecomeAMarchent>
         </div>
     );
 };

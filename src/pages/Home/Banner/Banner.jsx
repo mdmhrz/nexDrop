@@ -7,7 +7,7 @@ import { Carousel } from 'react-responsive-carousel';
 
 const Banner = () => {
     return (
-        <Carousel autoPlay={true} infiniteLoop={true} showThumbs={false}>
+        <Carousel autoPlay={true} infiniteLoop={true} showThumbs={false} className='my-10 overflow-hidden rounded-2xl'>
             <div>
                 <img src={bannerImage1} />
                 <p className="legend">On Time Delivery</p>
