@@ -3,12 +3,12 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-/* @plugin "daisyui/theme" {
+@plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: '#CAEB66';
+  --color-primary: '#9ae600';
   --color-secondary: teal;
-} */
+}
 
 
 body {
