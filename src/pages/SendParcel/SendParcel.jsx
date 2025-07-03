@@ -21,7 +21,7 @@ const SendAParcel = () => {
     //submit related
     const { user } = useAuth();
     const now = new Date();
-    const trackingId = `NDX-${format(now, 'yyyyMMdd')}-${Math.floor(Math.random() * 100000)}`;
+    const trackingId = `NDX-${format(now, 'yyyyMMdd')}-${crypto.randomUUID().slice(0, 6).toUpperCase()}`;
 
     // Extract unique regions and districts from warehouse data
     const regions = [...new Set(warehouseData.map((item) => item.region))];
@@ -119,7 +119,7 @@ const SendAParcel = () => {
 
 
     return (
-        <div className="max-w-7xl mx-auto bg-base-200 p-6 rounded-xl shadow">
+        <div className="mx-auto bg-base-200 p-6 rounded-xl shadow my-20">
             <h2 className="text-2xl font-bold mb-2">Add Parcel (User)</h2>
             <p className="text-sm mb-6">
                 As the system is based on Door-to-Door delivery, Parcel needs both pickup and delivery location.
@@ -164,7 +164,7 @@ const SendAParcel = () => {
                 </div>
 
                 {/* Sender + Receiver side by side */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                     {/* Sender Info */}
                     <div>
                         <h3 className="text-lg font-semibold mb-4">Sender Info</h3>
@@ -249,8 +249,8 @@ const SendAParcel = () => {
                 </div>
 
                 {/* Submit */}
-                <div className="text-center">
-                    <button type="submit" className="btn btn-primary w-full max-w-xs">
+                <div className="text-left">
+                    <button type="submit" className="btn btn-primary text-black w-full max-w-xs">
                         Submit Parcel
                     </button>
                 </div>
