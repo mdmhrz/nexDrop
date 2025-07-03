@@ -4,6 +4,8 @@ import Swal from 'sweetalert2';
 import { format } from 'date-fns';
 import warehouseData from '../../assets/warehouses.json'; // adjust the path
 import useAuth from '../../hooks/useAuth';
+import { useLoaderData } from 'react-router';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const SendAParcel = () => {
     const {
@@ -13,6 +15,8 @@ const SendAParcel = () => {
         reset,
         formState: { errors },
     } = useForm();
+
+    const axiosSecure = useAxiosSecure()
 
     const watchType = watch('type');
     const senderRegion = watch('senderRegion');
@@ -111,15 +115,35 @@ const SendAParcel = () => {
                 console.log('Saving to DB:', parcelData);
 
                 //Save data to server
-                Swal.fire('Success!', 'Parcel submitted successfully.', 'success');
-                //reset();
+                axiosSecure.post('/parcels', parcelData)
+                    .then(response => {
+                        console.log('Parcel submitted successfully:', response.data);
+                        if (response.data.insertedId) {
+                            // Reset form only if submission is successful
+                            reset();
+                            //here you could redirect to a payment page or trigger a payment modal
+                            Swal.fire({
+                                title: "Redirecting....",
+                                text: 'Porceeding to payment gateway',
+                                icon: 'success',
+                                timer: 1500,
+                                showConfirmButton: false
+                            });
+
+
+                        }
+                    })
+
+
+                // 
+                // //reset();
             }
         });
     };
 
 
     return (
-        <div className="mx-auto bg-base-200 p-6 rounded-xl shadow my-20">
+        <div className="mx-auto max-w-7xl bg-base-200 p-6 rounded-xl shadow my-20">
             <h2 className="text-2xl font-bold mb-2">Add Parcel (User)</h2>
             <p className="text-sm mb-6">
                 As the system is based on Door-to-Door delivery, Parcel needs both pickup and delivery location.
