@@ -2,9 +2,10 @@ import React from 'react';
 import { Link, NavLink } from 'react-router';
 import NexDropLogo from '../NexDropLogo/NexDropLogo';
 import useAuth from '../../../hooks/useAuth';
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
 
     const navItems = <>
         <li><NavLink to='/'>Home</NavLink></li>
@@ -18,6 +19,29 @@ const Navbar = () => {
         <li><NavLink to='/sendParcel'>Send A Parcel</NavLink></li>
         <li><NavLink to='/about'>About Us</NavLink></li>
     </>
+
+    const handleLogout = () => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, log out!',
+            cancelButtonText: 'Cancel'
+        }).then(result => {
+            if (result.isConfirmed) {
+                logout()
+                    .then(() => {
+                        console.log('Logged out successfully');
+                    })
+                    .catch(error => {
+                        console.error('Logout error:', error);
+                    });
+            }
+        });
+    };
+
+
     return (
         <div className="navbar bg-base-100 shadow-sm rounded-lg">
             <div className="navbar-start">
@@ -40,7 +64,7 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <Link to='/login' className='btn bg-lime-400'>Login</Link>
+                {user ? <button onClick={handleLogout} className='btn btn-primary text-black'>Logout</button> : <Link to='/login' className='btn bg-lime-400'>Login</Link>}
             </div>
         </div>
     );

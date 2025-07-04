@@ -4,11 +4,13 @@ import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import useAuth from '../../../hooks/useAuth';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router';
 
 const MyParcels = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
     const { data: parcels = [], refetch, isLoading } = useQuery({
         queryKey: ['my-parcels', user?.email],
@@ -71,15 +73,7 @@ const MyParcels = () => {
         });
 
         if (result.isConfirmed) {
-            const res = await axiosSecure.patch(`/parcels/pay/${parcel._id}`, {
-                isPaid: true,
-                paymentMethod: 'manual', // or "card" if using Stripe in future
-            });
-
-            if (res.data.modifiedCount > 0) {
-                Swal.fire('Payment Successful!', 'Your parcel has been marked as paid.', 'success');
-                queryClient.invalidateQueries(['my-parcels', user.email]);
-            }
+            navigate(`/dashboard/payment/${parcel._id}`)
         }
     };
 
