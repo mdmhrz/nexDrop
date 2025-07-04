@@ -1,6 +1,11 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router';
 import NexDropLogo from '../pages/shared/NexDropLogo/NexDropLogo';
+import { FaHome } from 'react-icons/fa';                  // Home
+import { FaBoxOpen } from 'react-icons/fa';              // My Parcels
+import { FaHistory } from 'react-icons/fa';              // Payment History
+import { BiSearchAlt } from 'react-icons/bi';            // Track a Package
+import { FaUserEdit } from 'react-icons/fa';
 
 const DashboardLayout = () => {
     return (
@@ -47,8 +52,38 @@ const DashboardLayout = () => {
                 <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
                     {/* Sidebar content here */}
                     <NexDropLogo></NexDropLogo>
-                    <li><a>Home</a></li>
-                    <li><NavLink to='/dashboard/myParcels'>My Parcels</NavLink></li>
+                    <li>
+                        <NavLink to='/'>
+                            <FaHome className="inline mr-2" />
+                            Home
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/dashboard/myParcels'>
+                            <FaBoxOpen className="inline mr-2" />
+                            My Parcels
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/dashboard/paymentHistory'>
+                            <FaHistory className="inline mr-2" />
+                            Payment History
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/dashboard/track'>
+                            <BiSearchAlt className="inline mr-2" />
+                            Track a Package
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/dashboard/profile'>
+                            <FaUserEdit className="inline mr-2" />
+                            Update Profile
+                        </NavLink>
+                    </li>
+
+
                 </ul>
             </div>
         </div>
