@@ -1,13 +1,18 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router';
 import NexDropLogo from '../pages/shared/NexDropLogo/NexDropLogo';
-import { FaClock, FaHome, FaMotorcycle } from 'react-icons/fa';                  // Home
+import { FaClock, FaHome, FaMotorcycle, FaUserShield } from 'react-icons/fa';                  // Home
 import { FaBoxOpen } from 'react-icons/fa';              // My Parcels
 import { FaHistory } from 'react-icons/fa';              // Payment History
 import { BiSearchAlt } from 'react-icons/bi';            // Track a Package
 import { FaUserEdit } from 'react-icons/fa';
+import useUserRole from '../hooks/useUserRole';
 
 const DashboardLayout = () => {
+
+    const { role, roleLoading } = useUserRole();
+    console.log(role);
+
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -83,19 +88,31 @@ const DashboardLayout = () => {
                         </NavLink>
                     </li>
 
-                    <li>
-                        <NavLink to='/dashboard/activeRiders'>
-                            <FaMotorcycle className="inline mr-2" />
-                            Active Riders
-                        </NavLink>
-                    </li>
+                    {/* Admin Links */}
 
-                    <li>
-                        <NavLink to='/dashboard/pendingRiders'>
-                            <FaClock className="inline mr-2" />
-                            Pending Riders
-                        </NavLink>
-                    </li>
+                    {!roleLoading && role === 'admin' &&
+                        <>
+                            <li>
+                                <NavLink to='/dashboard/activeRiders'>
+                                    <FaMotorcycle className="inline mr-2" />
+                                    Active Riders
+                                </NavLink>
+                            </li>
+
+                            <li>
+                                <NavLink to='/dashboard/pendingRiders'>
+                                    <FaClock className="inline mr-2" />
+                                    Pending Riders
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/makeAdmin">
+                                    <FaUserShield className="inline mr-2" />
+                                    Make Admin
+                                </NavLink>
+                            </li>
+                        </>
+                    }
 
 
                 </ul>

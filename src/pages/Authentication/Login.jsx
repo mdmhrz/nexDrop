@@ -46,7 +46,7 @@ const Login = () => {
                     <div><a className="link link-hover">Forgot password?</a></div>
 
                     <button className="btn bg-lime-500 mt-4">Login</button>
-                    <div>Don't have an account?<Link to='/register' className="btn btn-link text-blue-600">Register</Link></div>
+                    <div>Don't have an account?<Link state={{ from }} to='/register' className="btn btn-link text-blue-600">Register</Link></div>
                 </fieldset>
             </form>
             <SocialLogin></SocialLogin>

@@ -19,7 +19,7 @@ const PendingRiders = () => {
 
     if (isPending) return <Loading />;
 
-    const handleApprove = async (id) => {
+    const handleApprove = async (id, email) => {
         const confirm = await Swal.fire({
             title: "Are you sure?",
             text: "You are about to approve this rider.",
@@ -30,7 +30,7 @@ const PendingRiders = () => {
         });
 
         if (confirm.isConfirmed) {
-            const res = await axiosSecure.patch(`/riders/approve/${id}`, { status: "active" });
+            const res = await axiosSecure.patch(`/riders/approve/${id}`, { status: 'active', email });
             if (res.data.modifiedCount > 0) {
                 Swal.fire("Approved!", "Rider has been approved.", "success");
                 refetch();
@@ -91,7 +91,7 @@ const PendingRiders = () => {
                                         <FaEye />
                                     </button>
                                     <button
-                                        onClick={() => handleApprove(rider._id)}
+                                        onClick={() => handleApprove(rider._id, rider.email)}
                                         className="btn btn-sm btn-success text-white"
                                     >
                                         <FaCheck />
@@ -141,7 +141,7 @@ const PendingRiders = () => {
                         <div className="flex justify-end gap-2 mt-4">
                             <button
                                 onClick={() => {
-                                    handleApprove(selectedRider._id);
+                                    handleApprove(selectedRider._id, selectedRider.email);
                                     setSelectedRider(null);
                                 }}
                                 className="btn btn-sm btn-success"
