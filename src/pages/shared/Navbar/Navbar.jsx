@@ -17,7 +17,7 @@ const Navbar = () => {
             </>
         }
         <li><NavLink to='/sendParcel'>Send A Parcel</NavLink></li>
-        <li><NavLink to='/about'>About Us</NavLink></li>
+        <li><NavLink to='/beARider'>Be A Rider</NavLink></li>
     </>
 
     const handleLogout = () => {
