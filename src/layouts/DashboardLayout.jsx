@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router';
 import NexDropLogo from '../pages/shared/NexDropLogo/NexDropLogo';
-import { FaClock, FaHome, FaMotorcycle, FaUserShield } from 'react-icons/fa';                  // Home
+import { FaClipboardList, FaClock, FaHome, FaMotorcycle, FaTasks, FaUserShield } from 'react-icons/fa';
+import { MdAddTask, MdAssignmentInd, MdTaskAlt } from 'react-icons/md';                 // Home
 import { FaBoxOpen } from 'react-icons/fa';              // My Parcels
 import { FaHistory } from 'react-icons/fa';              // Payment History
 import { BiSearchAlt } from 'react-icons/bi';            // Track a Package
@@ -88,10 +89,37 @@ const DashboardLayout = () => {
                         </NavLink>
                     </li>
 
+                    {/* Rider Links */}
+                    {!roleLoading && role === 'rider' && <>
+                        <li>
+                            <NavLink to='/dashboard/pendingDeliveries'>
+                                <FaTasks className="inline mr-2" />
+                                Pending Deliveries
+                            </NavLink>
+                        </li>
+
+                        <li>
+                            <NavLink to='/dashboard/completedDeliveries'>
+                                <MdTaskAlt className="inline mr-2" />
+                                Completed Deliveries
+                            </NavLink>
+                        </li>
+
+                    </>}
+
+
+
                     {/* Admin Links */}
 
                     {!roleLoading && role === 'admin' &&
                         <>
+                            <li>
+                                <NavLink to='/dashboard/assignRider'>
+                                    <MdAssignmentInd className="inline mr-2" />
+                                    Assign Rider
+                                </NavLink>
+                            </li>
+
                             <li>
                                 <NavLink to='/dashboard/activeRiders'>
                                     <FaMotorcycle className="inline mr-2" />

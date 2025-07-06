@@ -31,7 +31,7 @@ const PendingRiders = () => {
 
         if (confirm.isConfirmed) {
             const res = await axiosSecure.patch(`/riders/approve/${id}`, { status: 'active', email });
-            if (res.data.modifiedCount > 0) {
+            if (res?.data?.modifiedCount > 0) {
                 Swal.fire("Approved!", "Rider has been approved.", "success");
                 refetch();
             }

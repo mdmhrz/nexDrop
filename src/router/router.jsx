@@ -16,6 +16,12 @@ import BeARider from "../pages/Dashboard/BeARider/BeARider";
 import PendingRiders from "../pages/Dashboard/PendingRiders/PendingRiders";
 import ActiveRiders from "../pages/Dashboard/ActiveRiders/ActiveRiders";
 import MakeAdmin from "../pages/Dashboard/MakeAdmin/MakeAdmin";
+import Forbidden from "../pages/Fobidden/Forbidden";
+import AdminRoutes from "../routes/AdminRoutes";
+import AssignRider from "../pages/Dashboard/AssignRider/AssignRider";
+import RiderRoutes from "../routes/RiderRoutes";
+import PendingDeliveries from "../pages/Dashboard/PendingDeliveries/PendingDeliveries";
+import CompletedDeliveries from "../pages/Dashboard/CompletedDeliveries/CompletedDeliveries";
 
 export const router = createBrowserRouter([
     {
@@ -38,6 +44,10 @@ export const router = createBrowserRouter([
                 path: 'sendParcel',
                 element: <PrivateRoute><SendParcel></SendParcel></PrivateRoute>,
             },
+            {
+                path: 'forbidden',
+                Component: Forbidden
+            }
         ]
     },
     {
@@ -74,17 +84,33 @@ export const router = createBrowserRouter([
                 path: 'track',
                 Component: TrackParcel
             },
+
+            //Admin only routes
+            {
+                path: 'assignRider',
+                element: <AdminRoutes><AssignRider></AssignRider></AdminRoutes>
+            },
             {
                 path: 'pendingRiders',
-                Component: PendingRiders
+                element: <AdminRoutes><PendingRiders></PendingRiders></AdminRoutes>
             },
             {
                 path: 'activeRiders',
-                Component: ActiveRiders
+                element: <AdminRoutes><ActiveRiders></ActiveRiders></AdminRoutes>
             },
             {
                 path: 'makeAdmin',
-                Component: MakeAdmin
+                element: <AdminRoutes><MakeAdmin></MakeAdmin></AdminRoutes>
+            },
+
+            // Rider only routes
+            {
+                path: 'pendingDeliveries',
+                element: <RiderRoutes><PendingDeliveries></PendingDeliveries></RiderRoutes>
+            },
+            {
+                path: 'completedDeliveries',
+                element: <RiderRoutes><CompletedDeliveries></CompletedDeliveries></RiderRoutes>
             },
 
         ]

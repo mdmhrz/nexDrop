@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { format } from 'date-fns';
 import warehouseData from '../../assets/warehouses.json'; // adjust the path
 import useAuth from '../../hooks/useAuth';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const SendAParcel = () => {
@@ -15,6 +15,7 @@ const SendAParcel = () => {
         reset,
         formState: { errors },
     } = useForm();
+    const navigate = useNavigate();
 
     const axiosSecure = useAxiosSecure()
 
@@ -107,7 +108,7 @@ const SendAParcel = () => {
                     created_date: now.toISOString(), // recommended format for DB and sorting
                     created_at_readable: format(now, 'PPpp'), // for display: "Jul 2, 2025 at 11:12 PM"
                     trackingId,
-                    status: 'pending',
+                    delivery_status: 'not_collected',
                     isPaid: false,
                     paymentMethod: 'unpaid',
                 };
@@ -128,8 +129,9 @@ const SendAParcel = () => {
                                 icon: 'success',
                                 timer: 1500,
                                 showConfirmButton: false
-                            });
 
+                            });
+                            navigate('/dashboard/myParcels')
 
                         }
                     })
