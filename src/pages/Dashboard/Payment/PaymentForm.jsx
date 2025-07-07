@@ -10,6 +10,7 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import Loading from '../../../components/Loading';
 import useAuth from '../../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import useTrackingLogger from '../../../hooks/useTrackingLogger';
 
 const PaymentForm = () => {
 
@@ -19,6 +20,7 @@ const PaymentForm = () => {
     const { parcelId } = useParams();
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
+    const { logTracking } = useTrackingLogger()
     const navigate = useNavigate();
 
 
@@ -120,8 +122,16 @@ const PaymentForm = () => {
                             confirmButtonText: 'Go to My Parcels',
                             confirmButtonColor: '#22c55e',
                             allowOutsideClick: false,
-                        }).then((result) => {
+                        }).then(async (result) => {
                             if (result.isConfirmed) {
+                                //Tracking update
+                                await logTracking({
+                                    tracking_id: parcelInfo.tracking_id,
+                                    status: 'payment_done',
+                                    details: `Paid by ${user.displayName}`,
+                                    updated_by: user.email
+                                })
+
                                 navigate('/dashboard/myparcels');
                             }
                         });

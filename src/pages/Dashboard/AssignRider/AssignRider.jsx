@@ -5,11 +5,15 @@ import { useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useTrackingLogger from '../../../hooks/useTrackingLogger';
+import useAuth from '../../../hooks/useAuth';
 
 const AssignRider = () => {
     const axiosSecure = useAxiosSecure();
     const [selectedParcel, setSelectedParcel] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { logTracking } = useTrackingLogger();
+    const { user } = useAuth()
 
     const { data: parcels = [], isLoading, isError, refetch } = useQuery({
         queryKey: ['assignableParcels'],
@@ -49,7 +53,17 @@ const AssignRider = () => {
                 riderName: rider.name
             });
 
+
             if (res.data.success) {
+                //Tracking Update
+                await logTracking({
+                    tracking_id: selectedParcel.tracking_id,
+                    status: 'rider_assigned',
+                    details: `Assigned to ${rider.name}`,
+                    updated_by: user.email
+                })
+
+
                 toast.success("Rider assigned successfully!");
                 refetch();       // refresh parcel list
                 handleClose();   // close modal

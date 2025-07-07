@@ -6,6 +6,7 @@ import warehouseData from '../../assets/warehouses.json'; // adjust the path
 import useAuth from '../../hooks/useAuth';
 import { useLoaderData, useNavigate } from 'react-router';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useTrackingLogger from '../../hooks/useTrackingLogger';
 
 const SendAParcel = () => {
     const {
@@ -16,6 +17,7 @@ const SendAParcel = () => {
         formState: { errors },
     } = useForm();
     const navigate = useNavigate();
+    const { logTracking } = useTrackingLogger();
 
     const axiosSecure = useAxiosSecure()
 
@@ -26,7 +28,7 @@ const SendAParcel = () => {
     //submit related
     const { user } = useAuth();
     const now = new Date();
-    const trackingId = `NDX-${format(now, 'yyyyMMdd')}-${crypto.randomUUID().slice(0, 6).toUpperCase()}`;
+    const tracking_id = `NDX-${format(now, 'yyyyMMdd')}-${crypto.randomUUID().slice(0, 6).toUpperCase()}`;
 
     // Extract unique regions and districts from warehouse data
     const regions = [...new Set(warehouseData.map((item) => item.region))];
@@ -107,7 +109,7 @@ const SendAParcel = () => {
                     deliveryZone,
                     created_date: now.toISOString(), // recommended format for DB and sorting
                     created_at_readable: format(now, 'PPpp'), // for display: "Jul 2, 2025 at 11:12 PM"
-                    trackingId,
+                    tracking_id,
                     delivery_status: 'not_collected',
                     isPaid: false,
                     paymentMethod: 'unpaid',
@@ -117,8 +119,8 @@ const SendAParcel = () => {
 
                 //Save data to server
                 axiosSecure.post('/parcels', parcelData)
-                    .then(response => {
-                        console.log('Parcel submitted successfully:', response.data);
+                    .then(async (response) => {
+                        // console.log('Parcel submitted successfully:', response.data);
                         if (response.data.insertedId) {
                             // Reset form only if submission is successful
                             reset();
@@ -131,6 +133,14 @@ const SendAParcel = () => {
                                 showConfirmButton: false
 
                             });
+
+                            await logTracking({
+                                tracking_id: parcelData.tracking_id,
+                                status: 'parcel_created',
+                                details: `Created by ${user.displayName}`,
+                                updated_by: user.email
+                            })
+
                             navigate('/dashboard/myParcels')
 
                         }

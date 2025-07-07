@@ -67,14 +67,14 @@ const CompletedDeliveries = () => {
                 <td className="text-green-600 font-semibold">{earning.toFixed(2)}৳</td>
                 <td>{new Date(parcel.created_date).toLocaleString()}</td>
                 <td>
-                    {parcel.cashout_status === 'requested' ? (
+                    {parcel.cashout_status === 'cashed_out' ? (
                         <span className="badge badge-success">Paid</span>
                     ) : (
                         <button
                             className="btn btn-xs btn-warning"
                             onClick={() => handleCashoutRequest(parcel._id)}
                         >
-                            Request Cashout
+                            Cashout
                         </button>
                     )}
                 </td>

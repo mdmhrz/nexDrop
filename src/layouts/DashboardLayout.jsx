@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, Outlet } from 'react-router';
 import NexDropLogo from '../pages/shared/NexDropLogo/NexDropLogo';
 import { FaClipboardList, FaClock, FaHome, FaMotorcycle, FaTasks, FaUserShield } from 'react-icons/fa';
-import { MdAddTask, MdAssignmentInd, MdTaskAlt } from 'react-icons/md';                 // Home
+import { MdAddTask, MdAssignmentInd, MdMonetizationOn, MdTaskAlt } from 'react-icons/md';                 // Home
 import { FaBoxOpen } from 'react-icons/fa';              // My Parcels
 import { FaHistory } from 'react-icons/fa';              // Payment History
 import { BiSearchAlt } from 'react-icons/bi';            // Track a Package
@@ -59,7 +59,7 @@ const DashboardLayout = () => {
                     {/* Sidebar content here */}
                     <NexDropLogo></NexDropLogo>
                     <li>
-                        <NavLink to='/'>
+                        <NavLink to='/dashboard'>
                             <FaHome className="inline mr-2" />
                             Home
                         </NavLink>
@@ -104,6 +104,14 @@ const DashboardLayout = () => {
                                 Completed Deliveries
                             </NavLink>
                         </li>
+
+                        <li>
+                            <NavLink to='/dashboard/myEarnings'>
+                                <MdMonetizationOn className="inline mr-2" />
+                                My Earnings
+                            </NavLink>
+                        </li>
+
 
                     </>}
 

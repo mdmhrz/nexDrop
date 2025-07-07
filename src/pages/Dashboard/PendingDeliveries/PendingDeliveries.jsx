@@ -4,10 +4,12 @@ import useAuth from '../../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import Loading from '../../../components/Loading';
 import Swal from 'sweetalert2';
+import useTrackingLogger from '../../../hooks/useTrackingLogger';
 
 const PendingDeliveries = () => {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
+    const { logTracking } = useTrackingLogger();
 
     const { data: parcels = [], isLoading, refetch } = useQuery({
         queryKey: ['riderPendingParcels', user?.email],
@@ -19,7 +21,7 @@ const PendingDeliveries = () => {
     });
 
 
-    const updateParcelStatus = async (parcelId, newStatus) => {
+    const updateParcelStatus = async (parcel, newStatus) => {
         const actionText = newStatus === 'in_transit' ? 'mark as picked up' : 'mark as delivered';
 
         const result = await Swal.fire({
@@ -35,11 +37,25 @@ const PendingDeliveries = () => {
         if (result.isConfirmed) {
             try {
                 const res = await axiosSecure.patch(`/parcels/updateStatus`, {
-                    parcelId,
-                    status: newStatus,
+                    parcelId: parcel._id,
+                    status: newStatus
                 });
 
                 if (res.data.success) {
+
+                    // tracing updated
+                    let trackDetails = `Picked up by ${user.displayName}`
+                    if (newStatus === 'delivered') {
+                        trackDetails = `Delivered by ${user.displayName}`
+                    }
+
+                    await logTracking({
+                        tracking_id: parcel.tracking_id,
+                        status: newStatus,
+                        details: trackDetails,
+                        updated_by: user.email
+                    })
+
                     Swal.fire('Success!', `Parcel ${actionText} successfully.`, 'success');
                     refetch();
                 } else {
@@ -89,7 +105,7 @@ const PendingDeliveries = () => {
                                     {parcel.delivery_status === 'rider_assigned' && (
                                         <button
                                             className="btn btn-sm btn-info"
-                                            onClick={() => updateParcelStatus(parcel._id, 'in_transit')}
+                                            onClick={() => updateParcelStatus(parcel, 'in_transit')}
                                         >
                                             Mark Picked
                                         </button>
@@ -97,7 +113,7 @@ const PendingDeliveries = () => {
                                     {parcel.delivery_status === 'in_transit' && (
                                         <button
                                             className="btn btn-sm btn-success"
-                                            onClick={() => updateParcelStatus(parcel._id, 'delivered')}
+                                            onClick={() => updateParcelStatus(parcel, 'delivered')}
                                         >
                                             Mark Delivered
                                         </button>
